@@ -4,6 +4,9 @@
 // init project
 var express = require('express');
 var app = express();
+var mongo=require('mongodb');
+var mongoClient=mongo.mongoClient;
+var dbUrl=process.env.MONGO
 
 // we've started you off with Express, 
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
@@ -13,6 +16,7 @@ app.use(express.static('public'));
 
 // http://expressjs.com/en/starter/basic-routing.html
 app.get("/", function (request, response) {
+  mongoClient.connect()
   //response.sendFile(__dirname + '/views/index.html');
 });
 
