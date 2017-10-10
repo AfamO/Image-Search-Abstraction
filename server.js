@@ -6,7 +6,7 @@ var express = require('express');
 var app = express();
 var mongo=require('mongodb');
 var mongoClient=mongo.mongoClient;
-var dbUrl=process.env.MONGO
+var dbUrl=process.env.MONGODB_URI;
 
 // we've started you off with Express, 
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
@@ -15,8 +15,22 @@ var dbUrl=process.env.MONGO
 app.use(express.static('public'));
 
 // http://expressjs.com/en/starter/basic-routing.html
-app.get("/", function (request, response) {
-  mongoClient.connect()
+app.get("/imagesearch/", function (request, response) {
+  var searchTerm=request.url.replace("","");
+  mongoClient.connect(dbUrl,function(err,db){
+    if (err) {
+    console.log('Unable to connect to the mongoDB server. Error:', err);
+  } else {
+    console.log('Connection established to my', dbUrl);
+    var collection=db.collection('images');
+    if(collection!=null){
+      var query={snippet:};
+    }
+    else{
+      console.log('Collection images was not found on DB.');
+    }
+  }
+  });
   //response.sendFile(__dirname + '/views/index.html');
 });
 
