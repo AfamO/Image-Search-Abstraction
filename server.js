@@ -16,7 +16,9 @@ app.use(express.static('public'));
 
 // http://expressjs.com/en/starter/basic-routing.html
 app.get("/imagesearch/", function (request, response) {
-  var searchTerm=request.url.replace("","");
+  //https://bronze-soarer.glitch.me/imagesearch/lol%20cats?offset=10    lol%20cats?offset=10
+  var offset=request.query.offset;
+  var searchTerm=request.url.replace("https://bronze-soarer.glitch.me/imagesearch/","");
   mongoClient.connect(dbUrl,function(err,db){
     if (err) {
     console.log('Unable to connect to the mongoDB server. Error:', err);
@@ -24,7 +26,12 @@ app.get("/imagesearch/", function (request, response) {
     console.log('Connection established to my', dbUrl);
     var collection=db.collection('images');
     if(collection!=null){
-      var query={snippet:};
+      var query={snippet:searchTerm};
+      //Search for the array of marching images snippet
+      collection.find(query).toArray(function(err,data){
+        if(err) throw err;
+        console.log("Found Images are:"+data);
+      });
     }
     else{
       console.log('Collection images was not found on DB.');
