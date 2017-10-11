@@ -65,7 +65,7 @@ app.get("/imagesearch/*", function (request, response) {
     console.log('Unable to connect to the mongoDB server. Error:', err);
   } else {
     console.log('Connection established to my', dbUrl);
-    var collection=db.collection('images');
+    var collection=db.collection('images-coll');
     if(collection!=null){
       var query={snippet:searchItem};
       //Search for the array of marching images snippet
@@ -91,7 +91,7 @@ app.get("/imagesearch/*", function (request, response) {
       });
     }
     else{
-      console.log('Collection images was not found on DB.');
+      console.log('Collection "images-coll" was not found on DB.');
     }
   }
   });
