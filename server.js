@@ -56,9 +56,12 @@ if(dbUrl==undefined)
 // http://expressjs.com/en/starter/basic-routing.html
 app.get("/imagesearch/*", function (request, response) {
   //https://bronze-soarer.glitch.me/imagesearch/lol%20cats?offset=10    lol%20cats?offset=10
+  response.send(JSON.stringify(request))
   var offset=request.query.offset;
   offset=Number(offset);
+  console.log("Url=="+request.url)
   var searchItem=request.url.replace("https://bronze-soarer.glitch.me/imagesearch/","");
+  console.log("Search Item=="+searchItem)
   searchItem=searchItem.replace("?offset="+offset,"");
   mongoClient.connect(dbUrl,function(err,db){
     if (err) {
@@ -68,10 +71,11 @@ app.get("/imagesearch/*", function (request, response) {
     var collection=db.collection('images-coll');
     if(collection!=null){
       var query={snippet:searchItem};
+      console.log("Search Item=="+searchItem)
       //Search for the array of marching images snippet
       collection.find(query).limit(offset).toArray(function(err,data){
         if(err) throw err;
-        console.log("Found Images are:"+data);
+        console.log("Found Images are:"+JSON.stringify(data));
         if(data!=null)
           {
              if(data._id!=null)
@@ -80,7 +84,7 @@ app.get("/imagesearch/*", function (request, response) {
                 db.close();
                 var returnedData="data array"
                     //data[offset];
-                response.send(returnedData);
+                response.send(data);
             }
           }
         else
