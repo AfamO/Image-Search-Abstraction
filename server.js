@@ -29,7 +29,7 @@ app.get("/imagesearch/", function (request, response) {
     if(collection!=null){
       var query={snippet:searchItem};
       //Search for the array of marching images snippet
-      collection.find(query).toArray(function(err,data){
+      collection.find(query).limit(offset).toArray(function(err,data){
         if(err) throw err;
         console.log("Found Images are:"+data);
         if(data!=null)
