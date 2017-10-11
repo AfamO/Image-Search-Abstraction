@@ -13,7 +13,9 @@ var dbUrl=process.env.MONGODB_URI;
 
 // http://expressjs.com/en/starter/static-files.html
 app.use(express.static('public'));
-
+app.get("/",function(request,response){
+  //response.sendFile(__dirname + '/views/index.html');
+});
 // http://expressjs.com/en/starter/basic-routing.html
 app.get("/imagesearch/", function (request, response) {
   //https://bronze-soarer.glitch.me/imagesearch/lol%20cats?offset=10    lol%20cats?offset=10
