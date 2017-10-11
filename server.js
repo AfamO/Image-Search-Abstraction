@@ -23,8 +23,11 @@ app.get("/insertimages/", function (request, response) {
 response.sendFile(__dirname + '/views/index.html');
 //response.send(JSON.stringify(url.parse(request.url, true)))
 var offset=request.query.offset;
-console.log("My DbUrl is::"+dbUrl);
-mongoClient.connect(dbUrl, function(err, db){
+if(dbUrl==undefined)
+  {
+    console.log("Dburl is undef");
+  }
+  mongoClient.connect(dbUrl, function(err, db){
 if (err) {
     console.log('Unable to connect to the mongoDB server. Error:', err);
   } else {
