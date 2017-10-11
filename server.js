@@ -19,7 +19,7 @@ app.use(express.static('public'));
 app.get("/",function(request,response){
   //response.sendFile(__dirname + '/views/index.html');
 });
-app.get("/insertimages/", function (request, response) {
+app.get("/insertimages_used_only_once_in_a_while/", function (request, response) {
 response.sendFile(__dirname + '/views/index.html');
 //response.send(JSON.stringify(url.parse(request.url, true)))
 var offset=request.query.offset;
@@ -54,9 +54,10 @@ if(dbUrl==undefined)
 });
 
 // http://expressjs.com/en/starter/basic-routing.html
-app.get("/imagesearch/", function (request, response) {
+app.get("/imagesearch/*", function (request, response) {
   //https://bronze-soarer.glitch.me/imagesearch/lol%20cats?offset=10    lol%20cats?offset=10
   var offset=request.query.offset;
+  offset=Number(offset);
   var searchItem=request.url.replace("https://bronze-soarer.glitch.me/imagesearch/","");
   searchItem=searchItem.replace("?offset="+offset,"");
   mongoClient.connect(dbUrl,function(err,db){
