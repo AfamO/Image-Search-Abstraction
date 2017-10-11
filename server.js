@@ -56,12 +56,13 @@ if(dbUrl==undefined)
 // http://expressjs.com/en/starter/basic-routing.html
 app.get("/imagesearch/*", function (request, response) {
   //https://bronze-soarer.glitch.me/imagesearch/lol%20cats?offset=10    lol%20cats?offset=10
-  response.send(JSON.stringify(request))
+  response.send(JSON.stringify(url.parse(request.url, true)))
   var offset=request.query.offset;
   offset=Number(offset);
   console.log("Url=="+request.url)
-  var searchItem=request.url.replace("https://bronze-soarer.glitch.me/imagesearch/","");
+  var searchItem=request.url.replace("/imagesearch/","");
   console.log("Search Item=="+searchItem)
+  searchItem=request.url.replace("/imagesearch/","");
   searchItem=searchItem.replace("?offset="+offset,"");
   mongoClient.connect(dbUrl,function(err,db){
     if (err) {
