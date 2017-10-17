@@ -71,8 +71,8 @@ app.get("/imagesearch/*", function (request, response) {
   } else {
     console.log('Connection established to my', dbUrl);
     var collection=db.collection('images-coll');
-    if(collection!=null){   //'.*' + name + '.*'
-      var query={snippet:'.*' + searchItem + '.*'};
+    if(collection!=null){   //'.*' + name + '.*'  { $regex: '.*' + colName + '.*' }
+      var query={snippet:{$regex:'.*' +searchItem+'.*'}};
       console.log("query=="+JSON.stringify(query))
       console.log("Search Item=="+searchItem)
       //Search for the array of marching images snippet
