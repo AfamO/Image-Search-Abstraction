@@ -128,6 +128,9 @@ app.get("/api/imagesearch/*", function (request, response) {
   //response.sendFile(__dirname + '/views/index.html');
 });
 
+function deletekeys(value,index,arr){
+  delete value._id;
+}
 app.get("/api/latest/imagesearch/", function (request, response) {
   
   
@@ -141,6 +144,7 @@ app.get("/api/latest/imagesearch/", function (request, response) {
         if(data.length>0)
           {
             console.log(" Images array found in DB.");
+            data.forEach(deletekeys);
             response.send("<center><strong>Found Latest Search Items are:::</center></strong><br><br><br>"+JSON.stringify(data));// Display the found images
           }
         else{
