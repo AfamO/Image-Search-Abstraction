@@ -67,17 +67,18 @@ app.get("/imagesearch/*", function (request, response) {
   searchItem=searchItem.replace("%20","");
   console.log("Search Item Without Space== "+searchItem)
   searchItem=searchItem.replace("?offset="+offset,"");
+  searchItem=searchItem.replace(".","");
   mongoClient.connect(dbUrl,function(err,db){
     if (err) {
     console.log('Unable to connect to the mongoDB server. Error:', err);
   } else {
     console.log('Connection established to my', dbUrl);
     var collection=db.collection('images-coll');
-    if(collection!=null){   //'.*' + name + '.*'  { $regex: '.*' + colName + '.*' }
-      var query={snippet:{$regex:'.*' +searchItem+'.*'}};
+    if(collection!=null){   //'.*' + name + '.*'  { $regex: '.*' + colName + '.*' } {snippet:{$regex:'.*' +searchItem+'.*'}};
+      var query={shows:{$regex : searchItem}};
       console.log("query=="+JSON.stringify(query))
       console.log("Search Item=="+searchItem)
-      response.send("Found Images Query are:::<br>"+JSON.stringify(query));
+      //response.send("Found Images Query are:::<br>"+JSON.stringify(query));
       //Search for the array of marching images snippet
       collection.find(query).limit(offset).toArray(function(err,data){
         if(err) throw err;
