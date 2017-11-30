@@ -56,12 +56,13 @@ if(dbUrl==undefined)
 // http://expressjs.com/en/starter/basic-routing.html
 app.get("/imagesearch/*", function (request, response) {
   //https://bronze-soarer.glitch.me/imagesearch/lol%20cats?offset=10    lol%20cats?offset=10
+  console.log("Search Item Without Space======= THISSSSSSSSS");
   response.send(JSON.stringify(url.parse(request.url, true)))
   var offset=request.query.offset;
   offset=Number(offset);
   console.log("Url=="+request.url)
   var searchItem=request.url.replace("/imagesearch/","");
-  console.log("Search Item=="+searchItem)
+  console.log("Search Itemmm=="+searchItem)
   searchItem=searchItem.replace("%20","");
   console.log("Search Item Without Space== "+searchItem)
   searchItem=searchItem.replace("?offset="+offset,"");
