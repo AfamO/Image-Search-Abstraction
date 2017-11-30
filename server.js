@@ -58,7 +58,7 @@ if(dbUrl==undefined)
 app.get("/imagesearch/*", function (request, response) {
   //https://bronze-soarer.glitch.me/imagesearch/lol%20cats?offset=10    lol%20cats?offset=10
   console.log("Search Item Without Space======= THISSSSSSSSS");
-  response.send(JSON.stringify(url.parse(request.url, true)))
+  //response.send(JSON.stringify(url.parse(request.url, true)))
   var offset=request.query.offset;
   offset=Number(offset);
   console.log("Url=="+request.url)
@@ -77,10 +77,13 @@ app.get("/imagesearch/*", function (request, response) {
       var query={snippet:{$regex:'.*' +searchItem+'.*'}};
       console.log("query=="+JSON.stringify(query))
       console.log("Search Item=="+searchItem)
+      response.send("Found Images Query are:::<br>"+JSON.stringify(query));
       //Search for the array of marching images snippet
       collection.find(query).limit(offset).toArray(function(err,data){
         if(err) throw err;
         console.log("Found Images are:"+JSON.stringify(data));
+        //response.send("Found Images Err are:::<br>"+JSON.stringify(err));
+        response.send("Found Images are:::<br>"+JSON.stringify(data));
         if(data!=null)
           {
              if(data._id!=null)
