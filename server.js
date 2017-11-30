@@ -64,10 +64,11 @@ app.get("/imagesearch/*", function (request, response) {
   console.log("Url=="+request.url)
   var searchItem=request.url.replace("/imagesearch/","");
   console.log("Search Itemmm=="+searchItem)
-  searchItem=searchItem.replace("%20","");
+  searchItem=searchItem.replace("%20"," ");
   console.log("Search Item Without Space== "+searchItem)
   searchItem=searchItem.replace("?offset="+offset,"");
   searchItem=searchItem.replace(".","");
+  searchItem=searchItem.replace(/%20/g," ");
   mongoClient.connect(dbUrl,function(err,db){
     if (err) {
     console.log('Unable to connect to the mongoDB server. Error:', err);
@@ -80,7 +81,7 @@ app.get("/imagesearch/*", function (request, response) {
       console.log("query=="+JSON.stringify(query))
       console.log("Search Item=="+searchItem)
       //query = { snippet: "Image - 24740] | LOLcats | Know Your Meme" };
-      response.send("Found Images Query are:::<br>"+new RegExp(searchItem, 'i'));
+      //response.send("Found Images Query are:::<br>"+new RegExp(searchItem, 'i'));
       //Search for the array of marching images snippet
       collection.find(query).limit(offset).toArray(function(err,data){
         if(err) throw err;
