@@ -75,9 +75,10 @@ app.get("/imagesearch/*", function (request, response) {
     console.log('Connection established to my', dbUrl);
     var collection=db.collection('images-coll');
     if(collection!=null){   //'.*' + name + '.*'  { $regex: '.*' + colName + '.*' } {snippet:{$regex:'.*' +searchItem+'.*'}};
-      var query={shows:{$regex : searchItem}};
+      var query={snippet:{$regex : searchItem}};
       console.log("query=="+JSON.stringify(query))
       console.log("Search Item=="+searchItem)
+      query = { $oid: "5a1fd2fa01f8221ad67aefce" };
       //response.send("Found Images Query are:::<br>"+JSON.stringify(query));
       //Search for the array of marching images snippet
       collection.find(query).limit(offset).toArray(function(err,data){
