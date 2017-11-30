@@ -19,8 +19,8 @@ app.use(express.static('public'));
 app.get("/",function(request,response){
   //response.sendFile(__dirname + '/views/index.html');
 });
-app.get("/insertimages_used_only_once_in_a_while/", function (request, response) {
-response.sendFile(__dirname + '/views/index.html');
+app.get("/insertimages/", function (request, response) {
+//response.sendFile(__dirname + '/views/index.html');//insertimages_used_only_once_in_a_while
 //response.send(JSON.stringify(url.parse(request.url, true)))
 var offset=request.query.offset;
 if(dbUrl==undefined)
@@ -42,6 +42,7 @@ if(dbUrl==undefined)
       if(err) throw err;
       console.log("Successfully Inserted Images to DB:"+data);
       console.log(JSON.stringify(imagesInfoArray))
+      response.send("Successfully Inserted Images to DB<br> The images results are:::<br>"+JSON.stringify(data));
       });
     }
     else{
