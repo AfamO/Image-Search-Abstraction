@@ -28,6 +28,9 @@ function ImageSearchObj(term,when){
   this.term=term;
   this.when=when;
 }
+function deletekeys(value,index,arr){
+  delete value._id;
+}
 app.use(express.static('public'));
 app.get("/",function(request,response){
 response.sendFile(__dirname + '/views/index.html');
@@ -129,9 +132,7 @@ app.get("/api/imagesearch/*", function (request, response) {
   
 });
 
-function deletekeys(value,index,arr){
-  delete value._id;
-}
+
 app.get("/api/latest/imagesearch/", function (request, response) {
   
   
