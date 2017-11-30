@@ -129,7 +129,32 @@ app.get("/api/imagesearch/*", function (request, response) {
 });
 
 app.get("/api/latest/imagesearch/", function (request, response) {
-  //response.send(dreams);
+  
+  
+  var collection=dbConn.collection('searched-images');
+    if(collection!=null){   //'.*' + name + '.*'  { $regex: '.*' + colName + '.*' } {snippet:{$regex:'.*' +searchItem+'.*'}};
+      //new RegExp(searchItem, 'i')
+      //var query={snippet:new RegExp(searchItem, 'i')};
+      console.log("query=="+JSON.stringify(query))
+      console.log("Search Item=="+searchItem)
+      //query = { snippet: "Image - 24740] | LOLcats | Know Your Meme" };
+      //response.send("Found Images Query are:::<br>"+new RegExp(searchItem, 'i'));
+      //Search for the array of marching images snippet
+      collection.find(query).limit(10).toArray(function(err,data){
+        if(err) throw err;
+        console.log("Found Images are:"+JSON.stringify(data));
+        //response.send("Found Images Err are:::<br>"+JSON.stringify(err));
+        //response.send("Found Images are:::<br>"+JSON.stringify(data));
+        if(data.length>0)
+          {
+            console.log(" Images array found in DB.");
+          }
+        else{
+          
+        }
+  
+  
+  
 });
 
 // could also use the POST body instead of query string: http://expressjs.com/en/api.html#req.body
