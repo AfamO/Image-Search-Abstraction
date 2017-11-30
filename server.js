@@ -138,7 +138,7 @@ app.get("/api/latest/imagesearch/", function (request, response) {
     if(collection!=null){  
       
       //Search for the array of marching SearchedImages Objects  
-      collection.find({}).toArray(function(err,data){
+      collection.find({}).limit(10).toArray(function(err,data){
         if(err) throw err;
         console.log("Found Images are:"+JSON.stringify(data));
         if(data.length>0)
