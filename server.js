@@ -21,7 +21,7 @@ var imagesInfoArray=[{"url":"http://i0.kym-cdn.com/photos/images/facebook/000/02
 "snippet":"Funny Cats ** video! LOLCats - Funny cat pictures - YouTube","thumbnail":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBbKF1looYRPv53gww-W-FjS6oS1TYa3mpgd_A0n222VEvvjX9uAQLC53J","context":"https://www.youtube.com/watch?v=amUeLI26URA"},{"url":"http://i0.kym-cdn.com/photos/images/original/000/024/740/lolcats-funny-pictures-halp-not-for-sale.jpg",
 "snippet":"Image - 24740] | LOLcats | Know Your Meme","thumbnail":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgGKaG75BuZHRVDztlPZrHNswxDhQKKK9XwxnNpj6TC_9yTF8wg42cZS4","context":"http://knowyourmeme.com/photos/24740-lolcats"}
 ];
-
+// https://bronze-soarer.glitch.me/api/latest/imagesearch
 // we've started you off with Express, 
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
 function ImageSearchObj(term,when){
@@ -30,7 +30,7 @@ function ImageSearchObj(term,when){
 }
 app.use(express.static('public'));
 app.get("/",function(request,response){
-//
+response.sendFile(__dirname + '/views/index.html');
 });
 app.get("/api/insertimages/", function (request, response) {
 var offset=request.query.offset;
@@ -125,7 +125,7 @@ app.get("/api/imagesearch/*", function (request, response) {
     }
   }
   });
-  //response.sendFile(__dirname + '/views/index.html');
+  
 });
 
 function deletekeys(value,index,arr){
@@ -138,7 +138,8 @@ app.get("/api/latest/imagesearch/", function (request, response) {
     if(collection!=null){  
       
       //Search for the array of marching SearchedImages Objects  
-      collection.find({}).limit(10).toArray(function(err,data){
+       var mysort = { when: -1 };
+      collection.find({}).limit(10).sort(mysort).toArray(function(err,data){
         if(err) throw err;
         console.log("Found Images are:"+JSON.stringify(data));
         if(data.length>0)
