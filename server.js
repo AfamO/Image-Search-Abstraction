@@ -19,7 +19,7 @@ app.use(express.static('public'));
 app.get("/",function(request,response){
   //response.sendFile(__dirname + '/views/index.html');
 });
-app.get("/insertimages/", function (request, response) {
+app.get("/api/insertimages/", function (request, response) {
 //response.sendFile(__dirname + '/views/index.html');//insertimages_used_only_once_in_a_while
 //response.send(JSON.stringify(url.parse(request.url, true)))
 var offset=request.query.offset;
@@ -55,14 +55,14 @@ if(dbUrl==undefined)
 });
 
 // http://expressjs.com/en/starter/basic-routing.html
-app.get("/imagesearch/*", function (request, response) {
+app.get("/api/imagesearch/*", function (request, response) {
   //https://bronze-soarer.glitch.me/imagesearch/lol%20cats?offset=10    lol%20cats?offset=10
   console.log("Search Item Without Space======= THISSSSSSSSS");
   //response.send(JSON.stringify(url.parse(request.url, true)))
   var offset=request.query.offset;
   offset=Number(offset);
   console.log("Url=="+request.url)
-  var searchItem=request.url.replace("/imagesearch/","");
+  var searchItem=request.url.replace("/api/imagesearch/","");
   console.log("Search Itemmm=="+searchItem)
   searchItem=searchItem.replace("%20"," ");
   console.log("Search Item Without Space== "+searchItem)
@@ -87,16 +87,17 @@ app.get("/imagesearch/*", function (request, response) {
         if(err) throw err;
         console.log("Found Images are:"+JSON.stringify(data));
         //response.send("Found Images Err are:::<br>"+JSON.stringify(err));
-        response.send("Found Images are:::<br>"+JSON.stringify(data));
+        //response.send("Found Images are:::<br>"+JSON.stringify(data));
         if(data!=null)
           {
              if(data._id!=null)
             {
+               response.send(data);
                 console.log(" Images array found in DB.");
                 db.close();
                 var returnedData="data array"
                     //data[offset];
-                response.send(data);
+                //response.send(data);
             }
           }
         else
@@ -114,7 +115,7 @@ app.get("/imagesearch/*", function (request, response) {
   //response.sendFile(__dirname + '/views/index.html');
 });
 
-app.get("/latest", function (request, response) {
+app.get("/api/latest/imagesearch/", function (request, response) {
   //response.send(dreams);
 });
 
