@@ -13,7 +13,10 @@ var imagesInfoArray=[{"url":"http://i0.kym-cdn.com/photos/images/facebook/000/02
 
 // we've started you off with Express, 
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
-
+function ImageSearchObj(term,when){
+  this.term=term;
+  this.when=when;
+}
 // http://expressjs.com/en/starter/static-files.html
 app.use(express.static('public'));
 app.get("/",function(request,response){
@@ -91,8 +94,9 @@ app.get("/api/imagesearch/*", function (request, response) {
         if(data.length>0)
           {
             console.log(" Images array found in DB.");
+            // INSERT THE ITEMS  
             db.close();
-            response.send("Found Images are:::<br><br><br>"+JSON.stringify(data));
+            response.send("<center><strong>Found Images are:::</center></strong><br><br><br>"+JSON.stringify(data));
              
           }
         else if(data.length==0)
