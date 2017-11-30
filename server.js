@@ -36,24 +36,24 @@ if(dbUrl==undefined)
     {
           console.log("My DbUrl is::"+dbUrl);
           mongoClient.connect(dbUrl, function(err, db){
-    if (err) {
-    console.log('Unable to connect to the mongoDB server. Error:', err);
-   } else {
-    console.log('Connection established to my', dbUrl);
-    var collection=db.collection('images-coll');
-    if(collection!=null){
-      //Insert the data array of images details
-      collection.insert(imagesInfoArray,function(err,data){
-      if(err) throw err;
-      console.log("Successfully Inserted Images to DB:"+data);
-      console.log(JSON.stringify(imagesInfoArray))
-      response.send("Successfully Inserted Images to DB<br> The images results are:::<br>"+JSON.stringify(data));
-      });
-    }
-    else{
-      console.log('Collection images was not found on DB.');
-    }
-  }
+          if (err) {
+          console.log('Unable to connect to the mongoDB server. Error:', err);
+         } else {
+          console.log('Connection established to my', dbUrl);
+          var collection=dbConn.collection('images-coll');
+          if(collection!=null){
+            //Insert the data array of images details
+            collection.insert(imagesInfoArray,function(err,data){
+            if(err) throw err;
+            console.log("Successfully Inserted Images to DB:"+data);
+            console.log(JSON.stringify(imagesInfoArray))
+            response.send("Successfully Inserted Images to DB<br> The images results are:::<br>"+JSON.stringify(data));
+            });
+          }
+          else{
+            console.log('Collection images was not found on DB.');
+          }
+        }
   }); //Ends connect function and call back
     }
   //response.sendFile(__dirname + '/views/index.html');
