@@ -79,7 +79,7 @@ app.get("/api/imagesearch/*", function (request, response) {
     console.log('Unable to connect to the mongoDB server. Error:', err);
   } else {
     console.log('Connection established to my', dbUrl);
-    var collection=db.collection('images-coll');
+    var collection=dbConn.collection('images-coll');
     if(collection!=null){   //'.*' + name + '.*'  { $regex: '.*' + colName + '.*' } {snippet:{$regex:'.*' +searchItem+'.*'}};
       //new RegExp(searchItem, 'i')
       var query={snippet:new RegExp(searchItem, 'i')};
@@ -97,22 +97,22 @@ app.get("/api/imagesearch/*", function (request, response) {
           {
             console.log(" Images array found in DB.");
             // INSERT THE SEARCH KEYWORD TO THE DB  
-            var collection=db.collection('searched-images');
-    if(collection!=null){
-      var imageSearchObj=new ImageSearchObj(searchItem,new Date());
-      //Insert the searched Image item of images details
-      collection.insert(imageSearchObj,function(err,data){
-      if(err) throw err;
-      console.log("Successfully Inserted Images to DB:"+data);
-      console.log(JSON.stringify(imageSearchObj))
-      response.send("Successfully Inserted Images to DB<br> The images results are:::<br>"+JSON.stringify(data));
-      });
-    }
-    else{
-      console.log('Collection images was not found on DB.');
-    }
-   db.close(); //close the opened connection for image search.
-            response.send("<center><strong>Found Images are:::</center></strong><br><br><br>"+JSON.stringify(data));
+            var collection=dbConn.collection('searched-images');
+            if(collection!=null){
+              var imageSearchObj=new ImageSearchObj(searchItem,new Date());
+              //Insert the searched Image item of images details
+              collection.insert(imageSearchObj,function(err,data){
+              if(err) throw err;
+              console.log("Successfully Inserted Images to DB:"+data);
+              console.log(JSON.stringify(imageSearchObj))
+              response.send("Successfully Inserted Images to DB<br> The images results are:::<br>"+JSON.stringify(data));
+              });
+            }
+            else{
+              console.log("Collection 'searched-images' was not found on DB.");
+            }
+   dbConn.close(); //close the opened connection for image search.
+   response.send("<center><strong>Found Images are:::</center></strong><br><br><br>"+JSON.stringify(data));// Display the found images
              
           }
         else if(data.length==0)
