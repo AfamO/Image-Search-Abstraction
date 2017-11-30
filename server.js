@@ -78,8 +78,8 @@ app.get("/imagesearch/*", function (request, response) {
       var query={snippet:{$regex : searchItem}};
       console.log("query=="+JSON.stringify(query))
       console.log("Search Item=="+searchItem)
-      query = { snippet: "Image - 24740] | LOLcats | Know Your Meme" };
-      //response.send("Found Images Query are:::<br>"+JSON.stringify(query));
+      //query = { snippet: "Image - 24740] | LOLcats | Know Your Meme" };
+      response.send("Found Images Query are:::<br>"+JSON.stringify(query));
       //Search for the array of marching images snippet
       collection.find(query).limit(offset).toArray(function(err,data){
         if(err) throw err;
