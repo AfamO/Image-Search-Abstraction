@@ -88,22 +88,17 @@ app.get("/api/imagesearch/*", function (request, response) {
         console.log("Found Images are:"+JSON.stringify(data));
         //response.send("Found Images Err are:::<br>"+JSON.stringify(err));
         //response.send("Found Images are:::<br>"+JSON.stringify(data));
-        if(data!=null)
+        if(data.length>0)
           {
-             if(data._id!=null)
-            {
-               response.send(data);
-                console.log(" Images array found in DB.");
-                db.close();
-                var returnedData="data array"
-                    //data[offset];
-                //response.send(data);
-            }
+            console.log(" Images array found in DB.");
+            db.close();
+            response.send("Found Images are:::<br><br><br>"+JSON.stringify(data));
+             
           }
-        else
+        else if(data.length==0)
           {
-           console.log(" port was not found in DB.");
-           response.send("Sorry!, but we can't find the corresponding images for the "+searchItem+" you requested for");
+           console.log(" Images was not found in DB.");
+           response.send("Sorry!, but we can't find the corresponding images for the search item '<strong><i>"+searchItem+"</i></strong>' you requested for");
           }
       });
     }
