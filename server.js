@@ -103,6 +103,7 @@ app.get("/api/imagesearch/*", function (request, response) {
               if(err) throw err;
               console.log("Successfully Inserted Images to DB:"+data);
               console.log(JSON.stringify(imageSearchObj))
+              data.forEach(deletekeys);//Removes the ._id key attribute since it is not needed to display to the user
               response.send("Successfully Inserted Images to DB<br> The images results are:::<br>"+JSON.stringify(data));
               });
             }
@@ -145,7 +146,8 @@ app.get("/api/latest/imagesearch/", function (request, response) {
         if(data.length>0)
           {
             console.log(" Images array found in DB.");
-            data.forEach(deletekeys);
+            data.forEach(deletekeys);//Removes the ._id key attribute since it is not needed to display to the user
+            
             response.send("<center><strong>Found Latest Search Items are:::</center></strong><br><br><br>"+JSON.stringify(data));// Display the found images
           }
         else{
